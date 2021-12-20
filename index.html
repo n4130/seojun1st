@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>서준이 1st anniversary</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap');
         <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
@@ -11,15 +13,124 @@
         font-family: 'NanumSquareRoundLight';
         font-family: 'NanumSquareRound';
         font-family: 'NanumSquareRoundBold';
-        font-family: 'NanumSquareRoundExtraBold';}
-        p{color: #424e56;}
-        p{word-spacing:0.1em;}
-        .name{color: #03A2E3;}
+        font-family: 'NanumSquareRoundExtraBold';
+        box-sizing: border-box; }
+    .wrap {
+      position: relative;
+      width: 100%;
+      /* border: 1px solid #000; */
+    }
+    .wrap .txt1 {
+      margin: 0;
+      background: #ccc;
+      width: 10%;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .btnWrap{
+        position: relative;
+      width: 100%;
+      height: 30px;
+      box-sizing: content-box; 
+    }
+    .btnWrap .backBtn{
+      width: 10%; 
+      height: 30px;
+      float: left;
+      margin-left: 40%;
+      background: #eee;
+      border: none;
+      border-right: 1px solid #ccc;
+    }
+    .btnWrap .backBtn:hover{
+        outline: 1px solid rebeccapurple;
+      background: #ddd;
+    }
+    .btnWrap .goBtn:hover{
+      background: #ddd;
+    }
+    .btnWrap .goBtn{
+        position: absolute;
+      width: 10%;
+      height: 30px;
+      float: right;
+      background: #eee;
+      border: none;
+      border-left: 1px solid #ccc;
+    }
+    .btnWrap .wrap{
+      float: left;
+    }
+    p{color: #424e56;
+      word-spacing:0.1em;
+      text-align: center;}
+    .name{color: #03A2E3;}
     </style>
     
 
 </head>
-<body style="text-align: center;" >
+<body>
+    <script>
+        $(function () {
+          var txt1 = $('.txt1'); // txt 막대
+          var count = 1; // 막대 이동 카운드
+    
+          // 이미지 데이터 배열
+          var img_src = [
+            "images/g1.jpg",
+            "images/g2.jpg",
+            "images/g3.jpg",
+            "images/g4.jpg",
+            "images/g5.jpg",
+            "images/g6.jpg",
+            "images/g7.jpg",
+            "images/g8.jpg",
+            "images/g9.jpg",
+            "images/g10.jpg",
+          ]
+    
+          // 초기 막대 이동값
+          $('.txt1').text(count);
+    
+          // update gallery
+          function update_gallery(){
+            $('.txt1').text(count);
+                // update gallery img
+                $('#gallery img').attr('src', img_src[count-1]);
+          }
+    
+          $('.btnWrap button').on('click', function () {
+            // 재생여부
+            if (!txt1.is(":animated")) {
+              // backBtn버튼 
+              if ($(this).hasClass('backBtn')) {
+                count--;
+                if (count < 1) {
+                  count = 1;
+                  return false; // 함수 종료
+                }
+                console.log(count);
+                update_gallery();
+                txt1.animate({ marginLeft: "-=10%" }, 300);
+              } else {
+                // goBtn
+                count++;
+                if (count > 10) { count = 10; return false; }
+                console.log(count);
+                update_gallery();
+                txt1.animate({ marginLeft: "+=10%" }, 300);
+              }
+    
+            } // 재생여부
+    
+          });
+        })
+    
+      </script>
+
     <img src="images/one.jpg" alt="메인이미지" width="100%">
     <p>부모라는 이름을 선물하고<br>큰 사랑과 감사를 가르쳐 준 우리 서준이가<br><br>
     첫 생일을 맞이 하였습니다.<br>관심 어린 애정으로 지켜보며 아껴주시는 분들을 모시고<br>식사 자리를 마련 했습니다.<br>
@@ -28,23 +139,18 @@
     <p><strong>아빠 김영수</strong> <small></strong>그리고</strong></small> <strong>엄마 권세림</strong></p>
         <br><br>
     <p><strong>포토 갤러리</strong></p>
-        <table align="center" cellpadding="1">
-            <tr>
-                <td colspan="3">
-                    <img src="images/g1.jpg" alt="갤러리 사진01" width="100%"></td>
-            </tr>
-            <tr>
-                <td><img src="images/g1.jpg" alt="갤러리 사진02" width="100%"></td>
-                <td><img src="images/g1.jpg" alt="갤러리 사진02" width="100%"></td>
-                <td><img src="images/g1.jpg" alt="갤러리 사진02" width="100%"></td>
-            </tr>
-            <tr>
-                <td><img src="images/g1.jpg" alt="갤러리 사진02" width="100%"></td>
-                <td><img src="images/g1.jpg" alt="갤러리 사진02" width="100%"></td>
-                <td><img src="images/g1.jpg" alt="갤러리 사진02" width="100%"></td>
-            </tr>
-        </table>
-   
+
+    <section id="gallery">
+        <img src="images/g1.jpg" alt="갤러리 사진01" width="100%">
+      </section>
+      <div class="btnWrap">
+        <button class="backBtn">◀</button>
+        <div class="wrap">
+          <p class="txt1">사진1</p>
+        </div>
+        <button class="goBtn">▶</button>
+      </div>
+       
         <br><br><br><br>
     <p><b>오시는길</b></p>
     <p class="name">2022년 1월 22일(토) 낮 12시<br>메이필드호텔 캐슬테라스</p>
